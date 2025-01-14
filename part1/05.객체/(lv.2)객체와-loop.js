@@ -10,6 +10,11 @@
  */
 function countProperties(obj) {
   // TODO
+  let cnt = 0;
+  for (let i in obj) {
+    cnt++;
+  }
+  return cnt;
 }
 
 export { countProperties };

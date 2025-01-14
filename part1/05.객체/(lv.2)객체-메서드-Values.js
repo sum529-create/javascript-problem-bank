@@ -11,6 +11,11 @@
  */
 function getObjectValues(obj) {
   // TODO
+  const result = [];
+  for (let i of Object.values(obj)) {
+    result.push(i);
+  }
+  return result;
 }
 
 // export를 수정하지 마세요.

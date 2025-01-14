@@ -11,6 +11,13 @@
  */
 function sumArray(arr) {
   // TODO
+  if (arr.length > 0) {
+    let sum = 0;
+    arr.forEach((e) => (sum += e));
+    return sum;
+  } else {
+    return 0;
+  }
 }
 
 // export를 수정하지 마세요.

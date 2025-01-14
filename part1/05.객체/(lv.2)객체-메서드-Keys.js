@@ -10,7 +10,12 @@
  */
 function getObjectKeys(obj) {
   // TODO
+  const result = [];
+  for (let i of Object.keys(obj)) {
+    result.push(i);
+  }
+  return result;
 }
-
+getObjectKeys({ name: "Alice", age: 25 });
 // export를 수정하지 마세요.
 export { getObjectKeys };
