@@ -12,6 +12,16 @@
  */
 function createCounter() {
   let count = 0;
+  const increase = () => {
+    return count++;
+  };
+  const decrease = () => {
+    return count--;
+  };
+  const currentValue = () => {
+    return count;
+  };
+  return { increase, decrease, currentValue };
 }
 
 // export를 수정하지 마세요.
