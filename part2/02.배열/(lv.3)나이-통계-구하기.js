@@ -10,7 +10,21 @@
  * @returns {{ averageAge: number, maxAge: number }}
  */
 
-function calculateStatistics(users) {}
+function calculateStatistics(users) {
+  return users.length > 0
+    ? users.reduce(
+        (acc, cur, i) => {
+          acc.sumAge += cur.age;
+          acc.maxAge = cur.age ? Math.max(acc.maxAge, cur.age) : 0;
+          if (i === users.length - 1) {
+            acc.averageAge = acc.sumAge / users.length;
+          }
+          return acc;
+        },
+        { averageAge: 0, sumAge: 0, maxAge: -Infinity }
+      )
+    : { averageAge: 0, maxAge: 0 };
+}
 
 // export 를 수정하지 마세요.
 export { calculateStatistics };

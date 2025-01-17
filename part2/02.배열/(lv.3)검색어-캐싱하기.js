@@ -17,11 +17,18 @@ let topKeywordsCache = [];
 
 function updateTopKeywords(keywords) {
   // TODO
+  const storeArr = keywords.reduce((acc, cur) => {
+    if (!acc.includes(cur)) {
+      acc.push(cur);
+    }
+    return acc;
+  }, []);
+  topKeywordsCache = storeArr.slice(0, 10);
 }
 
 function getTopKeywords() {
   // TODO
-  return [];
+  return [...topKeywordsCache];
 }
 
 // export를 수정하지 마세요.

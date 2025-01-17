@@ -12,10 +12,12 @@
 
 // TODO: 함수를 작성하세요.
 function getFrequency(arr) {
-  return arr.reduce((acc, cur) => {
-    acc[cur] = (acc[cur] || 0) + 1;
+  const frequencyMap = arr.reduce((acc, cur) => {
+    const cnt = acc.get(cur) || 0;
+    acc.set(cur, cnt + 1);
     return acc;
-  }, {});
+  }, new Map());
+  return Object.fromEntries(frequencyMap);
 }
 
 // export 를 수정하지 마세요.
