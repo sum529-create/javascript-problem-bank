@@ -27,7 +27,56 @@
  * @returns {(fn: () => Promise<any>) => Promise<any>}
  */
 
-function createRateLimiter(maxRequests, timeWindow) {}
+function createRateLimiter(maxRequests, timeWindow) {
+  const queue = [];
+  const requestTimes = [];
+
+  // 큐에서 다음 작업을 처리하는 함수
+  function processQueue() {
+    // 현재 시점에서 timeWindow보다 오래된 요청 시간들을 제거
+    const now = Date.now();
+    while (requestTimes.length > 0 && now - requestTimes[0] > timeWindow) {
+      requestTimes.shift();
+    }
+
+    // 큐에 작업이 있고, 현재 실행 중인 요청이 maxRequests보다 적으면
+    while (queue.length > 0 && requestTimes.length < maxRequests) {
+      const { task, resolve, reject } = queue.shift();
+      executeTask(task).then(resolve).catch(reject);
+    }
+  }
+
+  // 실제 작업을 실행하는 함수
+  async function executeTask(task) {
+    requestTimes.push(Date.now());
+    try {
+      return await task();
+    } finally {
+      // timeWindow가 지난 후에 큐 처리
+      setTimeout(processQueue, timeWindow);
+    }
+  }
+
+  // 반환되는 rate limiter 함수
+  return function rateLimited(task) {
+    return new Promise((resolve, reject) => {
+      const now = Date.now();
+
+      // timeWindow보다 오래된 요청 시간들을 제거
+      while (requestTimes.length > 0 && now - requestTimes[0] > timeWindow) {
+        requestTimes.shift();
+      }
+
+      // 현재 실행 중인 요청이 maxRequests보다 적으면 바로 실행
+      if (requestTimes.length < maxRequests) {
+        executeTask(task).then(resolve).catch(reject);
+      } else {
+        // 그렇지 않으면 큐에 추가
+        queue.push({ task, resolve, reject });
+      }
+    });
+  };
+}
 
 // export 를 수정하지 마세요.
 export { createRateLimiter };
