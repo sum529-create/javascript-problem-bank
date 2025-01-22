@@ -10,7 +10,17 @@
  * @returns {Promise<any>}
  */
 
-function retryRequest(promiseFactory, retries) {}
+async function retryRequest(promiseFactory, retries) {
+  for (let i = 0; i <= retries; i++) {
+    try {
+      const res = await promiseFactory();
+      return res;
+    } catch (error) {
+      // 최대 재시도 횟수
+      if (i === retries) throw error;
+    }
+  }
+}
 
 // export 를 수정하지 마세요.
 export { retryRequest };
