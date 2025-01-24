@@ -15,7 +15,18 @@ const inventory = [
   { id: 200, name: "Mouse", stock: 5 },
 ];
 
-function addProduct(newItem) {}
+function addProduct(newItem) {
+  const idx = inventory.findIndex((e) => e.id === newItem.id);
+  if (idx !== -1) {
+    inventory[idx] = {
+      ...inventory[idx],
+      stock: inventory[idx].stock + newItem.stock,
+    };
+  } else {
+    inventory[inventory.length] = newItem;
+  }
+  return inventory;
+}
 
 // export를 수정하지 마세요.
 export { inventory, addProduct };
