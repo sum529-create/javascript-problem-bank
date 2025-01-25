@@ -12,6 +12,16 @@
 // TODO: 함수를 작성하세요 (예: toggleCase)
 function toggleCase(str) {
   // TODO
+  return str
+    .split("")
+    .map((e) => {
+      if (e.toLowerCase() === e) {
+        return e.toUpperCase();
+      } else {
+        return e.toLowerCase();
+      }
+    })
+    .join("");
 }
 
 // export 를 수정하지 마세요.
