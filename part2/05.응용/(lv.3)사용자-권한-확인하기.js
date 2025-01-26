@@ -13,7 +13,16 @@
  * @returns {boolean}
  */
 
-function checkAccess(user, requiredRole) {}
+function checkAccess(user, requiredRole) {
+  const ruleArr = ["admin", "manager", "user"];
+  const requiredIdx = ruleArr.indexOf(requiredRole);
+  const userIdx = ruleArr.indexOf(user.role);
+  if (userIdx !== -1) {
+    return requiredIdx >= userIdx;
+  } else {
+    return false;
+  }
+}
 
 // export를 수정하지 마세요.
 export { checkAccess };

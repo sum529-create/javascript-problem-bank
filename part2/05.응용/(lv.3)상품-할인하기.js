@@ -13,7 +13,32 @@
  * @returns {number}
  */
 
-function calculateDiscount(price, coupon) {}
+function calculateDiscount(price, coupon) {
+  if (
+    !coupon ||
+    coupon.length === 0 ||
+    (coupon.type !== "percent" && coupon.type !== "fixed") ||
+    (coupon.type === "percent" &&
+      (coupon.rate === undefined || coupon.rate <= 0)) || // rate가 없는 경우
+    (coupon.type === "fixed" &&
+      (coupon.amount === undefined || coupon.amount <= 0)) // amount가 없는 경우
+  ) {
+    return price; // 할인 적용 없음
+  }
+
+  // percent 타입 쿠폰 처리
+  if (coupon.type === "percent") {
+    return price * (1 - coupon.rate);
+  }
+
+  // fixed 타입 쿠폰 처리
+  if (coupon.type === "fixed") {
+    return price - coupon.amount > 0 ? price - coupon.amount : 0;
+  }
+
+  // 기본값 반환
+  return price;
+}
 
 // export 를 수정하지 마세요.
 export { calculateDiscount };
