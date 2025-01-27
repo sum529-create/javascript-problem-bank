@@ -10,6 +10,21 @@
  * @returns {object}
  */
 
-function parseQueryString(queryString) {}
+function parseQueryString(queryString) {
+  const queryObj = {};
+  if (queryString === "" || queryString === "?") {
+    return {};
+  }
+  const sliceStr = queryString.slice(1);
+  const arr = sliceStr.split("&");
+  for (let i of arr) {
+    const splitItem = i.split("=");
+    if (!splitItem[1]) {
+      queryObj[splitItem[0]] = "";
+    }
+    queryObj[splitItem[0]] = splitItem[1] || "";
+  }
+  return queryObj;
+}
 
 export { parseQueryString };

@@ -11,7 +11,15 @@
  * @returns {object}
  */
 
-function pickKeys(obj, keys) {}
+function pickKeys(obj, keys) {
+  const answer = {};
+  for (let e of keys) {
+    if (e in obj) {
+      answer[e] = obj[e];
+    }
+  }
+  return answer;
+}
 
 // export 를 수정하지 마세요.
 export { pickKeys };
