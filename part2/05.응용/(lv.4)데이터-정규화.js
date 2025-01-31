@@ -28,7 +28,14 @@
  */
 
 // TODO: normalizeData 함수를 작성하세요.
-function normalizeData(data) {}
+function normalizeData(data) {
+  const sortArr = { byId: {}, allIds: [] };
+  for (let i of data) {
+    sortArr.byId[i.id] = { ...i };
+    if (sortArr.allIds.every((e) => e !== i.id)) sortArr.allIds.push(i.id);
+  }
+  return sortArr;
+}
 
 // export를 수정하지 마세요.
 export { normalizeData };

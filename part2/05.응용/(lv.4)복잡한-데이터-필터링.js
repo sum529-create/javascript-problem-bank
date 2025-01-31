@@ -36,6 +36,23 @@
  * @returns {Array}
  */
 
-function filterComplexData(data, conditions) {}
+function filterComplexData(data, conditions) {
+  let filterArr = [];
+  for (let i of data) {
+    const hasTags = conditions.tags && i.tags.includes(conditions.tags);
+    const hasActive =
+      conditions["info.active"] && conditions["info.active"] === i.info.active;
+    if (conditions.tags && conditions["info.active"]) {
+      if (hasTags && hasActive) filterArr.push(i);
+    } else if (conditions.tags) {
+      if (hasTags) filterArr.push(i);
+    } else if (conditions["info.active"]) {
+      if (hasActive) filterArr.push(i);
+    } else if (!conditions.tags && !conditions["info.active"]) {
+      filterArr = data;
+    }
+  }
+  return filterArr;
+}
 
 export { filterComplexData };
