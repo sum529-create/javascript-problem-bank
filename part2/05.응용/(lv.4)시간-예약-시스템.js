@@ -24,7 +24,19 @@
  */
 
 // TODO: scheduleNextAvailableTime 함수를 작성하세요.
-function scheduleNextAvailableTime(reservations, timeLength) {}
+function scheduleNextAvailableTime(reservations, timeLength) {
+  if (reservations.length === 0) return 0;
+  if (reservations.length === 1) return reservations[0].end;
+  const sortArr = [...reservations].sort((a, b) => a.start - b.start);
+  for (let i = 1; i < sortArr.length; i++) {
+    const timeDiff = sortArr[i].start - sortArr[i - 1].end;
+    if (timeDiff !== 0 && timeDiff - timeLength >= 0) {
+      return sortArr[i - 1].end;
+    } else {
+      if (i === sortArr.length - 1) return sortArr[i].end;
+    }
+  }
+}
 
 // export 를 수정하지 마세요.
 export { scheduleNextAvailableTime };
